@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="mb-3">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="p-2 btn btn-outline-primary">
+                {% if object %}
+                    Сохранить
+                {% else %}
+                    Создать
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

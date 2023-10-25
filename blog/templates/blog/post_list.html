@@ -1,0 +1,38 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <a href='{% url "blog:new_post" %}' class="btn btn-itd btn-lg btn-block btn-success">Добавить пост</a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div class="row text-start">
+        {% for object in object_list %}
+        <div class="card mb-4 box-shadow nav justify-content-center">
+            <div class="card-header">
+                <a class="link-offset-2 link-underline link-underline-opacity-0"
+                   href='{% url "blog:post" object.pk %}'>
+                    <h4 class="my-0 font-weight-normal">{{object.title}}</h4>
+                </a>
+            </div>
+            <div class="card-body">
+                <p class="text-start">{{object.content |slice:":300" }}...</p>
+                {% if object.image %}
+                    <img src="{% mediapath object.image %}" class="img float-start" width="500" alt="Post picture">
+                {% endif %}
+            </div>
+            <div class="row">
+                <p class="col">Просмотры: {{object.view_count}}</p>
+                <p class="col text-end text-secondary"><em>Опубликовано {{object.creation_date}}</em></p>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

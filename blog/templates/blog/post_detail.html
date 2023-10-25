@@ -1,0 +1,35 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+
+<div class="container text-start">
+    <div class="row">
+        <div class="col-9">
+            <div class="text">
+                <h1 class="display-4">{{object.title}}</h1>
+            </div>
+        </div>
+        <div class="col-3">
+            <a href='{% url "blog:edit" object.pk %}' class="btn btn-sm btn-block btn-success">Редактировать</a>
+            <a href='{% url "blog:delete" object.pk %}' class="btn btn-sm btn-block btn-danger">Удалить</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <p>{{object.content}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            {% if object.image %}
+                <img src="{% mediapath object.image %}" class="img-fluid float-start" alt="Product picture">
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <p class="col">Просмотры: {{object.view_count}}</p>
+        <p class="col text-end text-secondary"><em>Опубликовано {{object.creation_date}}</em></p>
+    </div>
+</div>
+{% endblock %}
