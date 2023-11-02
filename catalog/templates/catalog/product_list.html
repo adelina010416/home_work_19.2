@@ -5,6 +5,13 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Skystore</h1>
 </div>
+<div class="container">
+    <div class="col-12 mb-5">
+        <a href='{% url "catalog:new_product" %}' class="btn btn-itd btn-lg btn-block btn-primary">
+            Добавить продукт
+        </a>
+    </div>
+</div>
 
 <div class="container">
     <div class="row text-center">
@@ -13,7 +20,7 @@
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <a class="link-offset-2 link-underline link-underline-opacity-0"
-                       href='{% url "catalog:product" object.id %}'>
+                       href='{% url "catalog:product" object.pk %}'>
                         <h4 class="my-0 font-weight-normal">{{object.name |slice:":15"}}</h4>
                     </a>
                 </div>
@@ -21,6 +28,11 @@
                     <h1 class="card-title pricing-card-title">{{object.cost}} p.</h1>
                     <p class="text-start">{{object.description |slice:":100" | default_if_none:'' }}...</p>
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                </div>
+                <div class="card-footer text-end text-muted">
+                    {% if object.active_version_number %}
+                        v. {{ object.active_version_number }}
+                    {% endif %}
                 </div>
             </div>
         </div>

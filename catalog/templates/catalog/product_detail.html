@@ -2,9 +2,18 @@
 {% load my_tags %}
 
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-start">
-    <h1 class="display-4">{{object.name}}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <h1 class="display-4 mb-5">{{object.name}}</h1>
+        </div>
+        <div class="col-3">
+            <a href='{% url "catalog:edit_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-primary">Редактировать</a>
+            <a href='{% url "catalog:delete_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">Удалить</a>
+        </div>
+    </div>
 </div>
+
 <div class="container text-start">
     <div class="row justify-content-start">
         <div class="col-4">
