@@ -29,7 +29,7 @@ class ProductListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         for item in context['product_list']:
-            active_version = Version.objects.get(product=item, is_current=True)
+            active_version = Version.objects.filter(product=item, is_current=True).last()
             if active_version:
                 item.active_version_number = active_version.version_number
             else:
