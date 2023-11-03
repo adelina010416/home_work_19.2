@@ -1,0 +1,30 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <h2 class="display-4 mb-5">{{object.last_name}} {{object.first_name}}</h2>
+        </div>
+        <div class="col-3">
+            <a href='{% url "user:profile_edit" %}' class="nav-link px-2 text-dark me-2">
+                Редактировать профиль
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container text-start">
+    <div class="row justify-content-start">
+        <div class="col-4">
+          <img src="{% mediapath object.avatar %}" class="img-fluid float-start" alt="Product picture">
+        </div>
+        <div class="col-8">
+            <p>E-mail: {{ object.email  | default_if_none:'не указан' }}</p>
+            <p>Телефон: {{ object.phone  | default_if_none:'не указан' }}</p>
+            <p>Страна: {{ object.country  | default_if_none:'не указана' }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
