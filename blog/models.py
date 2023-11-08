@@ -1,7 +1,6 @@
 from django.db import models
 
-
-nullable = {'null': True, 'blank': True}
+from constants import nullable
 
 
 class Post(models.Model):

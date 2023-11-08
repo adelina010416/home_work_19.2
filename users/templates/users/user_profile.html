@@ -22,6 +22,9 @@
         </div>
         <div class="col-8">
             <p>E-mail: {{ object.email  | default_if_none:'не указан' }}</p>
+            {% if not object.verified %}
+                <p class="text-danger">(Почта не подтверждена!)</p>
+            {% endif %}
             <p>Телефон: {{ object.phone  | default_if_none:'не указан' }}</p>
             <p>Страна: {{ object.country  | default_if_none:'не указана' }}</p>
         </div>

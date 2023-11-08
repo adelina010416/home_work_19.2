@@ -3,10 +3,11 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView, D
 from pytils.translit import slugify
 
 from blog.models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ('title', 'content', 'image',)
     success_url = reverse_lazy('blog:posts')
@@ -40,7 +41,7 @@ class PostListView(ListView):
 
 
 # Update
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ('title', 'content', 'image',)
 
@@ -56,6 +57,6 @@ class PostUpdateView(UpdateView):
 
 
 # Delete
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('blog:posts')

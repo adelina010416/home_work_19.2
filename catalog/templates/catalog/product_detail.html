@@ -8,8 +8,10 @@
             <h1 class="display-4 mb-5">{{object.name}}</h1>
         </div>
         <div class="col-3">
-            <a href='{% url "catalog:edit_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-primary">Редактировать</a>
-            <a href='{% url "catalog:delete_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">Удалить</a>
+            {% if user == owner %}
+                <a href='{% url "catalog:edit_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-primary">Редактировать</a>
+                <a href='{% url "catalog:delete_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">Удалить</a>
+            {% endif %}
         </div>
     </div>
 </div>

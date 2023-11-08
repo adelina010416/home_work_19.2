@@ -1,0 +1,41 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<style>
+    img {
+      display: block;
+      max-width: 90%;
+      height: auto;
+    }
+</style>
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Необходима авторизация!</h1>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="row">
+            <div class="col-8">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h6>После авторизации вам станет доступно:</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Добавление продуктов</li>
+                            <li>Редактирование продуктов</li>
+                            <li>Удаление продуктов</li>
+                            <li>Добавление постов</li>
+                            <li>Редактирование постов</li>
+                            <li>Удаление постов</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <img class="img-thumbnail" src="/media/products/cartmen.png">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

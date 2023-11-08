@@ -136,3 +136,11 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/home'
+LOGIN_URL = '/user/login-fail'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'zim.adelina@yandex.ru'
+EMAIL_HOST_PASSWORD = 'YandexYalda010416'
+EMAIL_USE_SSL = True
+
