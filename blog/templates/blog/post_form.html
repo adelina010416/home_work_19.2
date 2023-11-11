@@ -5,15 +5,28 @@
 <div class="container">
     <div class="mb-3">
         <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="p-2 btn btn-outline-primary">
-                {% if object %}
-                    Сохранить
-                {% else %}
-                    Создать
-                {% endif %}
-            </button>
+            <div class="card col-6">
+                <div class="card-header">
+                    {% if object %}
+                        Вы действительно хотите снять с публикации пост "{{ object.title }}"?
+                    {% else %}
+                        Добавить пост
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="p-2 btn btn-outline-primary">
+                        {% if object %}
+                            Готово
+                        {% else %}
+                            Создать
+                        {% endif %}
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>

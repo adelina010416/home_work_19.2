@@ -3,7 +3,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView, D
 from pytils.translit import slugify
 
 from blog.models import Post
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 # Create
@@ -30,6 +30,13 @@ class PostDetailView(DetailView):
         self.object.save()
         return self.object
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_manager'] = False
+        if self.request.user.has_perm('blog.set_published'):
+            context['is_manager'] = True
+        return context
+
 
 class PostListView(ListView):
     model = Post
@@ -41,9 +48,12 @@ class PostListView(ListView):
 
 
 # Update
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ('title', 'content', 'image',)
+    fields = ('is_published',)
+
+    def test_func(self):
+        return self.request.user.has_perm('blog.set_published')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -57,6 +67,9 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 
 # Delete
-class PostDeleteView(LoginRequiredMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('blog:posts')
+
+    def test_func(self):
+        return self.request.user.is_superuser

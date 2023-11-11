@@ -11,8 +11,14 @@
             </div>
         </div>
         <div class="col-3">
-            <a href='{% url "blog:edit" object.pk %}' class="btn btn-sm btn-block btn-primary">Редактировать</a>
-            <a href='{% url "blog:delete" object.pk %}' class="btn btn-sm btn-block btn-danger">Удалить</a>
+            {% if is_manager %}
+            <a href='{% url "blog:edit" object.pk %}' class="btn btn-sm btn-block mt-4 btn-warning">
+                Снять с публикации</a>
+            {% endif %}
+            {% if request.user.is_superuser %}
+            <a href='{% url "blog:delete" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">
+                Удалить</a>
+            {% endif %}
         </div>
     </div>
     <div class="row">

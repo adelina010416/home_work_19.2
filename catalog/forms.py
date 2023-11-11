@@ -14,7 +14,26 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Product
-        exclude = ('creation_date', 'last_change_date', 'owner')
+        exclude = ('creation_date', 'last_change_date', 'owner', 'is_published')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_name = self.cleaned_data['name']
+        cleaned_description = self.cleaned_data['description']
+
+        for data in [cleaned_name, cleaned_description]:
+            for word in forbidden_list:
+                if word in data.lower():
+                    raise forms.ValidationError('Ошибка, попытка загрузить запрещённый продукт.')
+
+        return cleaned_data
+
+
+class ModeratorProductForm(StyleFormMixin, forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'category', 'is_published')
 
     def clean(self):
         cleaned_data = super().clean()

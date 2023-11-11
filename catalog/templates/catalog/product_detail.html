@@ -8,9 +8,17 @@
             <h1 class="display-4 mb-5">{{object.name}}</h1>
         </div>
         <div class="col-3">
-            {% if user == owner %}
-                <a href='{% url "catalog:edit_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-primary">Редактировать</a>
-                <a href='{% url "catalog:delete_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">Удалить</a>
+            {% if is_owner %}
+            <a href='{% url "catalog:edit_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-primary">
+                Редактировать</a>
+            {% endif %}
+            {% if is_moderator %}
+            <a href='{% url "catalog:moderate_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-warning">
+                Модерация</a>
+            {% endif %}
+            {% if is_owner %}
+            <a href='{% url "catalog:delete_product" object.pk %}' class="btn btn-sm btn-block mt-4 btn-danger">
+                Удалить</a>
             {% endif %}
         </div>
     </div>
@@ -19,10 +27,10 @@
 <div class="container text-start">
     <div class="row justify-content-start">
         <div class="col-4">
-          <img src="{% mediapath object.image %}" class="img-fluid float-start" alt="Product picture">
+            <img src="{% mediapath object.image %}" class="img-fluid float-start" alt="Product picture">
         </div>
         <div class="col-8">
-          <h1 class="card-title pricing-card-title">{{object.cost}} p.</h1>
+            <h1 class="card-title pricing-card-title">{{object.cost}} p.</h1>
             <p>{{object.description | default_if_none:'' }}</p>
             <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
         </div>

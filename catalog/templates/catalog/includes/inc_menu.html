@@ -8,6 +8,7 @@
             <ul class="nav col-12 col-lg-auto ms-3 me-lg-auto mb-2 justify-content-center gap-1 mb-md-0">
                 <li><a class="p-2 btn btn-outline-primary" href='{% url "blog:posts" %}'>Новости</a></li>
                 <li><a class="p-2 btn btn-outline-primary" href='{% url "catalog:home" %}'>Каталог</a></li>
+                <li><a class="p-2 btn btn-outline-primary" href='{% url "catalog:categories" %}'>Категории</a></li>
             </ul>
             <div class="text-end">
                 {% if user.is_authenticated %}

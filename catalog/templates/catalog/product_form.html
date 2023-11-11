@@ -32,8 +32,8 @@
                         {% for form in formset.forms %}
                             {{ form.as_p }}
                             {% if not forloop.last %}
-                            <hr>
-                        {% endif %}
+                                <hr>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

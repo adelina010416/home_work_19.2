@@ -8,7 +8,7 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from config import settings
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
-from utils import get_password
+from users.services import *
 
 
 class RegisterView(CreateView):
@@ -24,13 +24,7 @@ class RegisterView(CreateView):
         new_user = form.save()
         new_user.verified_password = verified_password
 
-        send_mail(
-            subject='Поздравляем с регистрацией!',
-            message=f'Чтобы завершить регистрацию, '
-                    f'перейдите по ссылке: http://127.0.0.1:8000/user/verifying?code={new_user.verified_password}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[new_user.email]
-        )
+        greeting_mail(new_user.verified_password, new_user.email)
         return super().form_valid(form)
 
 
@@ -89,12 +83,8 @@ class UserPasswordResetView(PasswordResetView):
             user = User.objects.get(email=user_mail)
             user.set_password(password)
             user.save()
-            send_mail(
-                subject='Сброс пароля',
-                message=f'Ваш новый пароль: {password}',
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[user_mail]
-            )
+
+            password_mail(password, user_mail)
             return super().form_valid(form)
 
         except ObjectDoesNotExist:
