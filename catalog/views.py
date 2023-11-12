@@ -24,7 +24,6 @@ def categories(request):
     return render(request, 'catalog/category_list.html', context)
 
 
-
 def category_products(request, pk):
     category = Category.objects.get(pk=pk)
     context = {'object_list': Product.objects.filter(category=pk),

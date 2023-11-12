@@ -20,12 +20,3 @@ def greeting_mail(verified_password, email):
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email]
     )
-
-
-def password_mail(password, user_mail):
-    send_mail(
-        subject='Сброс пароля',
-        message=f'Ваш новый пароль: {password}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[user_mail]
-    )

@@ -1,11 +1,9 @@
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DetailView
 
-from config import settings
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 from users.services import *
@@ -69,6 +67,11 @@ def login_fail(request):
 
 
 class UserPasswordResetView(PasswordResetView):
+    email_template_name = 'users/reset.html'
+    from_email = settings.EMAIL_HOST_USER
+    new_password = get_password()
+    extra_email_context = {'password': new_password}
+
     template_name = 'users/login.html'
     extra_context = {'title': 'Сброс пароля',
                      'button': 'Отправить',
@@ -76,15 +79,12 @@ class UserPasswordResetView(PasswordResetView):
     success_url = reverse_lazy('users:reset_done')
 
     def form_valid(self, form):
-        password = get_password()
         user_mail = form.cleaned_data.get('email')
 
         try:
             user = User.objects.get(email=user_mail)
-            user.set_password(password)
+            user.set_password(self.new_password)
             user.save()
-
-            password_mail(password, user_mail)
             return super().form_valid(form)
 
         except ObjectDoesNotExist:
