@@ -1,4 +1,4 @@
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, LoginView
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -7,6 +7,16 @@ from django.views.generic import CreateView, UpdateView, DetailView
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 from users.services import *
+
+
+class UserLoginView(LoginView):
+    model = User
+    template_name = 'users/login.html'
+
+    def get_success_url(self):
+        if self.request.user.verified:
+            return reverse('catalog:home')
+        return reverse('users:confirm_mail')
 
 
 class RegisterView(CreateView):
